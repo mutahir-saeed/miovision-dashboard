@@ -1,0 +1,8 @@
+# Miovision-inspired Streamlit theme.
+# Tune these hex values to the exact corporate palette if you have the brand guide.
+[theme]
+primaryColor = "#1FA85C"          # Miovision green (accents, active controls)
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F1F6F3"  # subtle green-tinted panels/sidebar
+textColor = "#10212B"             # deep navy ink
+font = "sans serif"

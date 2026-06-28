@@ -1,0 +1,8 @@
+streamlit>=1.40
+pandas>=2.0
+openpyxl>=3.1
+altair>=5.0
+plotly>=5.20
+# For the Google Sheets swap later (optional, not needed for the Excel version):
+# gspread>=6.0
+# google-auth>=2.0
