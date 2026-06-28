@@ -11,6 +11,7 @@ in the project changes.
 """
 
 from __future__ import annotations
+import io
 import re
 import pandas as pd
 import openpyxl
@@ -27,6 +28,12 @@ COL_NOTES = "notes"
 
 UNSPECIFIED_TASK = "(Unspecified)"
 REFERENCE_SHEET = "Reference"
+
+
+def _open_workbook(source):
+    if isinstance(source, bytes):
+        source = io.BytesIO(source)
+    return openpyxl.load_workbook(source, data_only=True)
 
 
 def _match_header(headers: dict[str, int], *needles: str, exclude: str | None = None) -> int | None:
@@ -67,7 +74,7 @@ def _to_float(v) -> float | None:
 
 def load_reference(path: str) -> dict:
     """Return the project -> [tasks] structure and holiday list from the Reference tab."""
-    wb = openpyxl.load_workbook(path, data_only=True)
+    wb = _open_workbook(path)
     ws = wb[REFERENCE_SHEET]
     projects: dict[str, list[str]] = {}
     # Row 1 = project headers; rows below = tasks, until a blank or the 'Public Holidays' marker.
@@ -97,7 +104,7 @@ def load_long_table(path: str) -> pd.DataFrame:
     student, project, task, hours, signals, week, date, notes
     Only rows with real work (hours or signals present) are kept.
     """
-    wb = openpyxl.load_workbook(path, data_only=True)
+    wb = _open_workbook(path)
     records = []
 
     for name in wb.sheetnames:
